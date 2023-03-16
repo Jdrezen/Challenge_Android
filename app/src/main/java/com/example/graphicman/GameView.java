@@ -38,6 +38,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private int iJeuxEnCour = 0;
 
 
+
     public boolean isRunning() {
         return true;
     }
