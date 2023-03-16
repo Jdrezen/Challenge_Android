@@ -43,6 +43,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private Context context;
 
 
+
     public boolean isRunning() {
         return true;
     }
