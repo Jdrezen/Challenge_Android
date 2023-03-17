@@ -121,6 +121,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     public void update() {
         if(fallFrame>=3){
             chrono.stop();
+            fallFrame = 0;
             gameView.perdu();
         }
         if(chrono.getTime()>=5){
