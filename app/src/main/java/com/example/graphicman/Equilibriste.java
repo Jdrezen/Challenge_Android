@@ -62,14 +62,14 @@ public class Equilibriste extends Jeu implements SensorEventListener {
 //        Paint blackPaint = new Paint();
 //        blackPaint.setColor(Color.rgb(0, 0, 0));
 //        canvasWrapper.drawCircle(x,y,50,blackPaint);
-        canvasWrapper.drawImage(boule,x,y,x+200,y+200);
+        canvasWrapper.drawImage(boule,x,y,x+800,y+800);
     }
 
     public void drawPoto(int x,int y){
 //        Paint blackPaint = new Paint();
 //        blackPaint.setColor(Color.rgb(0, 0, 0));
 //        canvasWrapper.drawRect(x,y,x+50,y+500, blackPaint);
-        canvasWrapper.drawImage(cornet,x,y,x+200,y+200);
+        canvasWrapper.drawImage(cornet,x,y,x+800,y+800);
     }
 
     public void drawFall(int x,int y){
@@ -110,7 +110,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     @Override
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
-        int x =  width/2;
+        int x =  (width/2) - 300;
         int y = 500;
 
         Paint p = new Paint();
