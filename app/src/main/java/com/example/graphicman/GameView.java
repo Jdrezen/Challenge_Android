@@ -83,6 +83,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }else{
             iJeuxEnCour++;
         }
+        historiqueJeux.get(iJeuxEnCour).start();
     }
 
     // appelé par un jeu quand c'est perdu
