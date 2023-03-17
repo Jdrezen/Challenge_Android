@@ -79,7 +79,7 @@ public class Bougies extends Jeu{
             if (anti) {
                 gameView.nextJeu();
             } else {
-                gameView.perdu("Il ne fallait pas souffler sur l'écran");
+                gameView.perdu("Il fallait souffler sur l'écran");
             }
         }
     }
@@ -104,7 +104,7 @@ public class Bougies extends Jeu{
         @Override
         public void run() {
             if (anti) {
-                gameView.perdu("Il fallait souffler sur l'écran");
+                gameView.perdu("Il ne fallait pas souffler sur l'écran");
             } else {
                 gameView.nextJeu();
             }
