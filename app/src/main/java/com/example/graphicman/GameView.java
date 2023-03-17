@@ -31,6 +31,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
     private int iJeuxEnCour = 0;
     private TouchButton touchButton;
+    private TouchButton donttouchButton;
     private String AUDIOPATH;
     private Context context;
     private int score;
@@ -60,8 +61,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void initJeux(Context context, SensorManager sensorManager){
-        touchButton = new TouchButton(context, this, screenWidth, screenHeight);
+        touchButton = new TouchButton(context, this, screenWidth, screenHeight, true);
+        donttouchButton = new TouchButton(context, this, screenWidth, screenHeight, false);
         jeuxPossibles.add(touchButton);
+        jeuxPossibles.add(donttouchButton);
+
         Equilibriste equilibriste = new Equilibriste(context,sensorManager, this,screenWidth, screenHeight);
         jeuxPossibles.add(equilibriste);
         jeuxPossibles.add(new Bougies(this, AUDIOPATH));
@@ -141,5 +145,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public void onTouch(MotionEvent motionEvent) {
         touchButton.buttonTouch(motionEvent);
+        donttouchButton.buttonTouch(motionEvent);
     }
 }

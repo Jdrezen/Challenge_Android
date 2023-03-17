@@ -18,12 +18,14 @@ public class TouchButton extends Jeu {
     private int buttonRadius;
     private Chrono chrono;
     private int maxTime;
+    private boolean touch;
 
-    public TouchButton(Context context, GameView gameView, int width, int height) {
+    public TouchButton(Context context, GameView gameView, int width, int height, boolean touch) {
         this.gameView = gameView;
         this.canvasWrapper = new CanvasWrapper(width, height);
         img_button = context.getDrawable(R.drawable.red_glossy_button);
         this.chrono = new Chrono();
+        this.touch = touch;
     }
 
     public void buttonTouch(MotionEvent motionEvent) {
@@ -39,16 +41,29 @@ public class TouchButton extends Jeu {
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
         Paint p = new Paint();
+        p.setColor(Color.RED);
         String display = chrono.displayTime();
-        p.setColor(Color.BLUE);
-        canvasWrapper.drawText(display, 300, 100, p, 70);
+        if (touch) {
+            canvasWrapper.drawText("Touchez le bouton", 120, 100, p, 70);
+
+        } else {
+            canvasWrapper.drawText("Ne Touchez pas", 150, 100, p, 70);
+            canvasWrapper.drawText("le bouton", 250, 200, p, 70);
+        }
+
+        p.setColor(Color.BLACK);
+        canvasWrapper.drawText(display, 330, touch?200:300, p, 70);
         canvasWrapper.drawImage(img_button, xButton, yButton, xButton + buttonRadius * 2, yButton + buttonRadius * 2);
     }
 
     @Override
     public void update() {
         if (chrono.isFinit()) {
-            gameView.perdu();
+            if (touch) {
+                gameView.perdu();
+            } else {
+                gameView.nextJeu();
+            }
         }
     }
 
@@ -56,8 +71,8 @@ public class TouchButton extends Jeu {
     public void start() {
         maxTime = 5000;
         buttonRadius = 100;
-        double xRand = 0.85;//Math.random();
-        double yRand = 0.85;//Math.random();
+        double xRand = Math.random();
+        double yRand = Math.random();
         xButton = (int) (xRand * (800 - buttonRadius * 2));
         yButton = (int) (yRand * (1190 - buttonRadius * 2));
         chrono.start(maxTime);
