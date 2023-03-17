@@ -55,12 +55,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         // lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
-        initJeux(context);
+        initJeux(context, sensorManager);
     }
 
-    public void initJeux(Context context){
-        touchButton = new TouchButton(context, this, screenWidth, screenHeight);
-        jeuxPossibles.add(touchButton);
+    public void initJeux(Context context, SensorManager sensorManager){
+//        jeuxPossibles.add(new TouchButton(context, this, screenWidth, screenHeight));
+        jeuxPossibles.add(new Equilibriste( sensorManager,this, screenWidth, screenHeight));
+
 
 
 
@@ -118,6 +119,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void draw(Canvas canvas) {
+        Log.d("draw","draw");
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawColor(Color.parseColor("#F5F5F5"));
