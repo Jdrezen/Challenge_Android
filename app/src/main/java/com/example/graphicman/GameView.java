@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.hardware.SensorManager;
 import android.media.MediaRecorder;
@@ -35,6 +34,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private TouchButton donttouchButton;
     private String AUDIOPATH;
     private Context context;
+    private int score;
     private boolean isRunning = false;
 
 
@@ -44,7 +44,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
-        image = context.getDrawable(R.drawable.gragro);
 
         AUDIOPATH = context.getCacheDir().getAbsolutePath() + "/audio.3gp";
 
@@ -70,6 +69,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         Equilibriste equilibriste = new Equilibriste(context,sensorManager, this,screenWidth, screenHeight);
         jeuxPossibles.add(equilibriste);
         jeuxPossibles.add(new Bougies(this, AUDIOPATH));
+        jeuxPossibles.add(new GameBoy(context, sensorManager,this, screenWidth, screenHeight));
 
         nextJeu();
     }
@@ -86,6 +86,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     // appelé par un jeu quand c'est gagné
     public void nextJeu(){
+        score++;
         if(historiqueJeux.size()==0){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size(), -1)));
         }else if(iJeuxEnCour==historiqueJeux.size()-1){
@@ -101,6 +102,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void perdu() {
         isRunning = false;
         Intent intent = new Intent(context, ScoreActivity.class);
+        intent.putExtra("score", score);
         context.startActivity(intent);
     }
 

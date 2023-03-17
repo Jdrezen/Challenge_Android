@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.172" />
 
     <TextView
-        android:id="@+id/highScore"
+        android:id="@+id/h"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="highScore"
@@ -35,13 +35,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="recommencerPartie"
-        android:text="Recommencer"
+        android:text="Reccommencer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintHorizontal_bias="0.892"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.869" />
+        app:layout_constraintVertical_bias="0.853" />
 
     <TextView
         android:id="@+id/textView2"
@@ -71,27 +71,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.164" />
 
-    <ImageView
-        android:id="@+id/deathImage"
-        android:layout_width="290dp"
-        android:layout_height="344dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472"
-        tools:srcCompat="@drawable/gragro" />
-
-    <TextView
-        android:id="@+id/deathText"
+    <Button
+        android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:onClick="nouvellePartie"
+        android:text="Nouvelle partie"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.124"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761" />
+        app:layout_constraintVertical_bias="0.853" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

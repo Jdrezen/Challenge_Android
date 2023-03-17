@@ -14,7 +14,7 @@ public class Chrono {
     public long getMilliTime(){
         long now = System.currentTimeMillis();
 
-        return (now - tempsDepart);
+        return tempsFin- (now - tempsDepart);
     }
 
     public boolean isFinit() {
