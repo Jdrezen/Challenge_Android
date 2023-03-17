@@ -65,12 +65,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         donttouchButton = new TouchButton(context, this, screenWidth, screenHeight, false);
         jeuxPossibles.add(touchButton);
         jeuxPossibles.add(donttouchButton);
-
-        Equilibriste equilibriste = new Equilibriste(context, sensorManager, this, screenWidth, screenHeight, true);
-        Equilibriste antiEquilibre = new Equilibriste(context, sensorManager, this, screenWidth, screenHeight, false);
-        jeuxPossibles.add(equilibriste);
-        jeuxPossibles.add(antiEquilibre);
-        jeuxPossibles.add(new Bougies(this, AUDIOPATH));
+        jeuxPossibles.add(new Equilibriste(context, sensorManager, this, screenWidth, screenHeight, true));
+        jeuxPossibles.add(new Equilibriste(context, sensorManager, this, screenWidth, screenHeight, false));
+        jeuxPossibles.add(new Bougies(this, AUDIOPATH, true));
+        jeuxPossibles.add(new Bougies(this, AUDIOPATH, false));
         jeuxPossibles.add(new GameBoy(context, sensorManager,this, screenWidth, screenHeight));
 
         nextJeu();

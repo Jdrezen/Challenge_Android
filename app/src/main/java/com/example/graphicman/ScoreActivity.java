@@ -47,10 +47,4 @@ public class ScoreActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    public void restartHighScore(){
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("highScore",0);
-        editor.apply();
-    }
 }
