@@ -24,7 +24,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread thread;
     private boolean running = true;
     private SensorManager sensorManager;
-    private LifeBars lifebars;
     private int screenHeight;
     private int screenWidth;
     Drawable image;
@@ -40,10 +39,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         return true;
     }
 
-    public LifeBars getLifebars() {
-        return lifebars;
-    }
-
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
         image = context.getDrawable(R.drawable.gragro);
@@ -57,7 +52,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
-        lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
         initJeux(context, sensorManager);

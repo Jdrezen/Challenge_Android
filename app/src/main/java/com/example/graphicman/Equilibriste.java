@@ -19,6 +19,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     private boolean perdu = false;
     private int fallFrame = 0;
     private String fallDirr = "right";
+    private Chrono chrono;
 
 
     Equilibriste(SensorManager sensorManager, GameView gameView, int width, int height) {
@@ -28,6 +29,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
         this.height = height;
         this.width = width;
         this.canvasWrapper = new CanvasWrapper(width, height);
+        this.chrono = new Chrono();
     }
 
     @Override
@@ -102,7 +104,12 @@ public class Equilibriste extends Jeu implements SensorEventListener {
         canvasWrapper.setCanvas(canvas);
         int x =  width/2;
         int y = 500;
+
+        Paint p = new Paint();
+        canvasWrapper.drawText("" + chrono.getTime(), 300, 100, p, 70);
+
         drawPoto(x, y);
+
         if(!perdu){
             drawEquilibriste(x, y);
         }else{
@@ -113,12 +120,17 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     @Override
     public void update() {
         if(fallFrame>=3){
+            chrono.stop();
+            gameView.perdu();
+        }
+        if(chrono.getTime()>=5){
             gameView.nextJeu();
         }
     }
 
     @Override
     public void start() {
+        chrono.start();
         fallFrame= 0;
         perdu = false;
     }
