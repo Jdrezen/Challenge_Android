@@ -2,6 +2,7 @@ package com.example.graphicman;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
 import android.util.Log;
 
@@ -13,10 +14,12 @@ public class Bougies extends Jeu{
     private GameView gameView;
     private float valeur;
     private String audioPath;
+    private Drawable img_candle;
 
     public Bougies(GameView gameView, String audioPath){
         this.gameView = gameView;
         this.audioPath = audioPath;
+        this.img_candle = gameView.getContext().getDrawable(R.drawable.candle_fire);
     }
 
     @Override
@@ -25,6 +28,7 @@ public class Bougies extends Jeu{
         c.setCanvas(canvas);
         Paint paint = new Paint();
         c.drawText(valeur + "", 200, 500, paint, 100);
+        c.drawImage(img_candle,500,1200, 600,1400);
     }
 
 
