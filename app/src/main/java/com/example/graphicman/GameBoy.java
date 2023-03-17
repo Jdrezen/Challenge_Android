@@ -98,7 +98,7 @@ public class GameBoy extends Jeu implements SensorEventListener {
         canvas.drawColor(Color.BLACK);
         Paint p = new Paint();
         p.setColor(Color.RED);
-        canvasWrapper.drawText("Eteint la GameBoy !", 100, 100, p, 70);
+        canvasWrapper.drawText("Cache la GameBoy !", 100, 100, p, 70);
         p.setColor(Color.WHITE);
         canvasWrapper.drawText(chrono.displayTime(), 300, 200, p, 70);
         if(hide){

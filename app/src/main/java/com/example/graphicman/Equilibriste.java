@@ -110,11 +110,15 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     @Override
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
-        int x =  (width/2) - 300;
+        int x =  (width/2) - 400;
         int y = 500;
 
         Paint p = new Paint();
-        canvasWrapper.drawText("" + chrono.displayTime(), 300, 100, p, 70);
+        p.setColor(Color.RED);
+        canvasWrapper.drawText("Ne fais pas tombez", 100, 100, p, 70);
+        canvasWrapper.drawText("la boule !", 250, 200, p, 70);
+        p.setColor(Color.BLACK);
+        canvasWrapper.drawText(chrono.displayTime(), 300, 300, p, 70);
 
         if(!perdu){
             drawEquilibriste(x, y);

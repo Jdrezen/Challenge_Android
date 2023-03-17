@@ -34,7 +34,11 @@ public class TouchButton extends Jeu {
         int xCenter = xButton + buttonRadius;
         int yCenter = yButton + buttonRadius;
         if (Math.sqrt((x - xCenter) * (x - xCenter) + (y - yCenter) * (y - yCenter)) < buttonRadius* 3 / 4) {
-            gameView.nextJeu();
+            if (touch) {
+                gameView.nextJeu();
+            } else {
+                gameView.perdu();
+            }
         }
     }
 

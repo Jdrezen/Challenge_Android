@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (motionEvent.getAction() == 0) {
             gameView.onTouch(motionEvent);
-
+        } else if (motionEvent.getAction() == 2) {
+            gameView.onDrag(motionEvent);
         }
         return true;
     }
