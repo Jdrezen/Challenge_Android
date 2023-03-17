@@ -13,6 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaRecorder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -36,7 +37,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Jeu> historiqueJeux = new ArrayList<Jeu>();
     private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
     private int iJeuxEnCour = 0;
-
+    private TouchButton touchButton;
 
 
     public boolean isRunning() {
@@ -60,10 +61,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
-        initJeux();
+        initJeux(context);
     }
 
-    public void initJeux(){
+    public void initJeux(Context context){
+        touchButton = new TouchButton(context, this, screenWidth, screenHeight);
+        jeuxPossibles.add(touchButton);
         Equilibriste equilibriste = new Equilibriste();
         jeuxPossibles.add(equilibriste);
 
@@ -72,7 +75,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public int getRandomInt(int min, int max) {
         Random rand = new Random();
-        return  rand.nextInt(max - min) + min;
+        return rand.nextInt(max - min) + min;
     }
 
     // appelé par un jeu quand c'est gagné
@@ -131,4 +134,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         historiqueJeux.get(iJeuxEnCour).update();
     }
 
+    public void onTouch(MotionEvent motionEvent) {
+        touchButton.buttonTouch(motionEvent);
+    }
 }
