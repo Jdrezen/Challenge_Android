@@ -2,6 +2,7 @@ package com.example.graphicman;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -16,6 +17,7 @@ public class TouchButton extends Jeu {
     private int yButton;
     private int buttonRadius;
     private Chrono chrono;
+    private int maxTime;
 
     public TouchButton(Context context, GameView gameView, int width, int height) {
         this.gameView = gameView;
@@ -30,7 +32,6 @@ public class TouchButton extends Jeu {
         int xCenter = xButton + buttonRadius;
         int yCenter = yButton + buttonRadius;
         if (Math.sqrt((x - xCenter) * (x - xCenter) + (y - yCenter) * (y - yCenter)) < buttonRadius* 3 / 4) {
-            chrono.stop();
             gameView.nextJeu();
         }
     }
@@ -38,23 +39,27 @@ public class TouchButton extends Jeu {
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
         Paint p = new Paint();
-        canvasWrapper.drawText("" + chrono.getTime(), 300, 100, p, 70);
+        String display = chrono.displayTime();
+        p.setColor(Color.BLUE);
+        canvasWrapper.drawText(display, 300, 100, p, 70);
         canvasWrapper.drawImage(img_button, xButton, yButton, xButton + buttonRadius * 2, yButton + buttonRadius * 2);
     }
 
     @Override
     public void update() {
-
+        if (chrono.isFinit()) {
+            gameView.perdu();
+        }
     }
 
     @Override
     public void start() {
-        double xRand = Math.random();
-        double yRand = Math.random();
-        xButton = (int) (xRand * (800 - buttonRadius * 2));
-        yButton = (int) (yRand * (1276 - buttonRadius * 2));
+        maxTime = 5000;
         buttonRadius = 100;
-        Log.d("tag", "here");
-        chrono.start();
+        double xRand = 0.85;//Math.random();
+        double yRand = 0.85;//Math.random();
+        xButton = (int) (xRand * (800 - buttonRadius * 2));
+        yButton = (int) (yRand * (1190 - buttonRadius * 2));
+        chrono.start(maxTime);
     }
 }

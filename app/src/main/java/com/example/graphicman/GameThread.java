@@ -53,10 +53,6 @@ public class GameThread extends Thread {
                     }
                 }
             }
-            else {
-                Intent intent = new Intent(context, ScoreActivity.class);
-                context.startActivity(intent);
-            }
         }
     };
 

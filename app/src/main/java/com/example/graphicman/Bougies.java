@@ -57,12 +57,12 @@ public class Bougies extends Jeu{
     @Override
     public void update() {
         valeur = recorder.getMaxAmplitude();
-        if(valeur > 15000 && on){
+        if (valeur > 15000 && on){
             on = false;
             recorder.stop();
             h.postDelayed(run, 1000);
         }
-        if(chrono.getTime() == 50f && on){
+        if (chrono.isFinit() && on){
             gameView.perdu();
         }
     }
@@ -80,7 +80,7 @@ public class Bougies extends Jeu{
             e.printStackTrace();
         }
         recorder.start();
-        chrono.start();
+        chrono.start(5000);
     }
 
     private Runnable run = new Runnable() {
