@@ -59,7 +59,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         // lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
-        initJeux(context);
+        initJeux(context, sensorManager);
     }
 
     public void initJeux(Context context){
@@ -87,7 +87,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }else{
             iJeuxEnCour++;
         }
-
     }
 
     // appelé par un jeu quand c'est perdu
