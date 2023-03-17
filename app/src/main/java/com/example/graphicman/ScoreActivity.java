@@ -19,14 +19,12 @@ public class ScoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        restartHighScore();
-
         setContentView(R.layout.activity_score);
 
         score = getIntent().getIntExtra("score", 0);
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        highScore = sharedPref.getInt("highScore", 0);
+        highScore = sharedPref.getInt("highScore", score);
 
         TextView highScoreView = findViewById(R.id.h);
         highScoreView.setText(highScore + "");
@@ -35,7 +33,7 @@ public class ScoreActivity extends AppCompatActivity {
         scoreView.setText(score + "");
 
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putLong("highScore", Math.max(score, highScore));
+        editor.putInt("highScore", Math.max(score, highScore));
         editor.apply();
     }
 
