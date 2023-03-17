@@ -1,7 +1,6 @@
 package com.example.graphicman;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
@@ -9,7 +8,7 @@ import android.os.Handler;
 
 import java.io.IOException;
 
-public class Bougies extends Jeu{
+public class AntiBougies extends Jeu{
 
     private MediaRecorder recorder = new MediaRecorder();
     private GameView gameView;
@@ -23,7 +22,7 @@ public class Bougies extends Jeu{
     private int frame = 0;
     private Chrono chrono = new Chrono();
 
-    public Bougies(GameView gameView, String audioPath){
+    public AntiBougies(GameView gameView, String audioPath){
         this.gameView = gameView;
         this.audioPath = audioPath;
         this.img_candle = gameView.getContext().getDrawable(R.drawable.candle_fire);
@@ -35,11 +34,7 @@ public class Bougies extends Jeu{
     public void draw(Canvas canvas) {
         CanvasWrapper c = new CanvasWrapper(800,1276);
         c.setCanvas(canvas);
-        Paint p = new Paint();
-        p.setColor(Color.RED);
-        c.drawText("Soufflez !", 250, 100, p, 70);
-        p.setColor(Color.BLACK);
-        c.drawText(chrono.displayTime(), 300, 200, p, 70);
+        Paint paint = new Paint();
 
         if(on){
             if(frame == 0){
@@ -67,7 +62,7 @@ public class Bougies extends Jeu{
             h.postDelayed(run, 1000);
         }
         if (chrono.isFinit() && on){
-            gameView.perdu();
+            gameView.nextJeu();
         }
     }
 
@@ -90,7 +85,7 @@ public class Bougies extends Jeu{
     private Runnable run = new Runnable() {
         @Override
         public void run() {
-            gameView.nextJeu();
+            gameView.perdu();
         }
     };
 }
