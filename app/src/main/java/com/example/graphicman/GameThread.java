@@ -63,7 +63,6 @@ public class GameThread extends Thread {
     private Runnable runUpdate = new Runnable() {
         public void run() {
             if (gameView.isRunning()) {
-                Log.d("runUpdate", "threadLog");
                 gameView.update();
                 h.postDelayed(this, 10);
             }
