@@ -73,10 +73,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     // appelé par un jeu quand c'est gagné
     public void nextJeu(){
-        if(historiqueJeux.size()==0 || iJeuxEnCour==historiqueJeux.size()-1){
+        if(historiqueJeux.size()==0){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
+        }else if(iJeuxEnCour==historiqueJeux.size()-1){
+            historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
+            iJeuxEnCour++;
+        }else{
+            iJeuxEnCour++;
         }
-        iJeuxEnCour++;
     }
 
     // appelé par un jeu quand c'est perdu
@@ -116,7 +120,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawColor(Color.parseColor("#F5F5F5"));
-            historiqueJeux.get(iJeuxEnCour).draw();
+            historiqueJeux.get(iJeuxEnCour).draw(canvas);
         }
     }
     public void update() {
