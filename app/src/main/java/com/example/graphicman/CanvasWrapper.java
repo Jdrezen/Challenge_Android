@@ -13,8 +13,6 @@ public class CanvasWrapper {
     public CanvasWrapper(int width, int height){
         this.widthRatio = width/800f;
         this.heightRatio = height/1276f;
-//        this.widthRatio = width/1080f;
-//        this.heightRatio = height/2154f;
     }
 
     public void setCanvas(Canvas canvas){
