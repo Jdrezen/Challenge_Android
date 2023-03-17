@@ -114,7 +114,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
         int y = 500;
 
         Paint p = new Paint();
-        canvasWrapper.drawText("" + chrono.getTime(), 300, 100, p, 70);
+        canvasWrapper.drawText("" + chrono.displayTime(), 300, 100, p, 70);
 
         if(!perdu){
             drawEquilibriste(x, y);
@@ -126,19 +126,18 @@ public class Equilibriste extends Jeu implements SensorEventListener {
 
     @Override
     public void update() {
-        if(fallFrame>=3){
-            chrono.stop();
+        if (fallFrame>=3){
 //            fallFrame = 0;
             gameView.perdu();
         }
-        if(chrono.getTime()>=15){
+        if (chrono.isFinit()){
             gameView.nextJeu();
         }
     }
 
     @Override
     public void start() {
-        chrono.start();
+        chrono.start(5000);
         fallFrame= 0;
         perdu = false;
     }

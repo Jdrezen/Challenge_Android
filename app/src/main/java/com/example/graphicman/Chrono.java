@@ -5,28 +5,28 @@ public class Chrono {
     private long tempsFin=0;
     private long duree=0;
 
-    public void start()
-    {
-        tempsDepart=System.currentTimeMillis();
-        tempsFin=0;
-        duree=0;
+    public void start(int milliSecondes) {
+        tempsDepart = System.currentTimeMillis();
+        tempsFin = milliSecondes;
+        duree = 0;
     }
 
+    public long getMilliTime(){
+        long now = System.currentTimeMillis();
 
-    public void stop()
-    {
-        if(tempsDepart==0){
-            return;
-        }
-
-        tempsFin=System.currentTimeMillis();
-        duree=(tempsFin-tempsDepart);
-        tempsDepart=0;
-        tempsFin=0;
+        return (now - tempsDepart);
     }
 
-    public long getTime(){
-        return (System.currentTimeMillis() - tempsDepart) / 100;
+    public boolean isFinit() {
+        long now = System.currentTimeMillis();
+
+        return tempsFin - (now - tempsDepart) <= 0;
+    }
+
+    public String displayTime() {
+        long now = System.currentTimeMillis();
+        long time = tempsFin - (now - tempsDepart);
+        return time/1000 + "." + time%1000/100 + " s";
     }
 
     public static String getDureeTxt(long input) {
@@ -44,4 +44,6 @@ public class Chrono {
 
         return res;
     }
+
+    // Décompte start paramètre décrémente isPassed 13.3s
 }
