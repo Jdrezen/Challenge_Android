@@ -32,6 +32,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private int iJeuxEnCour = 0;
     private TouchButton touchButton;
     private TouchButton donttouchButton;
+    private PetThedog petTheDog;
     private String AUDIOPATH;
     private Context context;
     private int score;
@@ -70,7 +71,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         jeuxPossibles.add(new Bougies(this, AUDIOPATH, true));
         jeuxPossibles.add(new Bougies(this, AUDIOPATH, false));
         jeuxPossibles.add(new GameBoy(context, sensorManager,this, screenWidth, screenHeight));
-
+        petTheDog = new PetThedog(context, this, screenWidth, screenHeight);
+        jeuxPossibles.add(petTheDog);
         nextJeu();
     }
 
@@ -147,8 +149,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void onTouch(MotionEvent motionEvent) {
         touchButton.buttonTouch(motionEvent);
         donttouchButton.buttonTouch(motionEvent);
+
     }
 
     public void onDrag(MotionEvent motionEvent) {
+        petTheDog.drag(motionEvent);
     }
 }
