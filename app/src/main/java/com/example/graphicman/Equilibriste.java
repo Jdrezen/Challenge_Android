@@ -34,10 +34,15 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     public void onSensorChanged(SensorEvent sensorEvent) {
         int x = (int)(sensorEvent.values[0] *(-2));
         int y = (int)(sensorEvent.values[0] *(-2));
-        if(x>1||x<-1 || y>1||y<-1){
+        Log.d("dirrr","  "+x+"   "+y);
+        if(x>1 || y>1){
             perdu = true;
+            fallDirr = "right";
         }
-        Log.d("dirr"," x =  " + x + " y = " + y);
+        if(x<-1 || y<-1){
+            perdu = true;
+            fallDirr = "left";
+        }
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -57,11 +62,38 @@ public class Equilibriste extends Jeu implements SensorEventListener {
         canvasWrapper.drawRect(x,y,x+50,y+500, blackPaint);
     }
 
-    public void drawFall(){
+    public void drawFall(int x,int y){
         if(fallDirr == "right"){
-            drawEquilibriste(int x,int y);
+            switch (fallFrame) {
+                case 0:
+                    drawEquilibriste(x+50, y+15);
+                    fallFrame++;
+                    break;
+                case 1:
+                    drawEquilibriste(x+70, y+100);
+                    fallFrame++;
+                    break;
+                case 2:
+                    drawEquilibriste(x+75, y+500);
+                    fallFrame++;
+                    break;
+            }
+
         }else{
-            drawEquilibriste(int x,int y);
+            switch (fallFrame) {
+                case 0:
+                    drawEquilibriste(x-50, y+15);
+                    fallFrame++;
+                    break;
+                case 1:
+                    drawEquilibriste(x-70, y+100);
+                    fallFrame++;
+                    break;
+                case 2:
+                    drawEquilibriste(x-75, y+500);
+                    fallFrame++;
+                    break;
+            }
         }
     }
 
@@ -74,18 +106,21 @@ public class Equilibriste extends Jeu implements SensorEventListener {
         if(!perdu){
             drawEquilibriste(x, y);
         }else{
-            drawFall();
+            drawFall(x,y);
         }
     }
 
 
     @Override
     public void update() {
-
+        if(fallFrame>=3){
+            gameView.nextJeu();
+        }
     }
 
     @Override
     public void start() {
-
+        fallFrame= 0;
+        perdu = false;
     }
 }
