@@ -25,6 +25,7 @@ public class GameBoy extends Jeu implements SensorEventListener {
     private Drawable boiSleep;
     private Drawable mama1;
     private Drawable mama2;
+    private Chrono chrono;
 
 
     GameBoy(Context context, SensorManager sensorManager, GameView gameView, int width, int height) {
@@ -38,6 +39,7 @@ public class GameBoy extends Jeu implements SensorEventListener {
         this.boiSleep = context.getDrawable(R.drawable.boisleep);
         this.mama1 = context.getDrawable(R.drawable.openingdoor);
         this.mama2 = context.getDrawable(R.drawable.maman);
+        this.chrono = new Chrono();
     }
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -98,11 +100,25 @@ public class GameBoy extends Jeu implements SensorEventListener {
 
     @Override
     public void update() {
-
+        if(chrono.getMilliTime() <= 1000){
+            mama = true;
+        }else
+        if(chrono.getMilliTime() <= 4000){
+            mama = false;
+        }else if(chrono.getMilliTime() <= 5000){
+            mama = true;
+        }
+        if(mama&& frame == 1 && !hide){
+            gameView.perdu();
+        }
+        if (chrono.isFinit()){
+            gameView.nextJeu();
+        }
     }
 
     @Override
     public void start() {
-
+        chrono.start(10000);
+        frame = 0;
     }
 }
