@@ -62,7 +62,7 @@ public class Bougies extends Jeu{
             recorder.stop();
             h.postDelayed(run, 1000);
         }
-        if(chrono.getTime() == 50f){
+        if(chrono.getTime() == 50f && on){
             gameView.perdu();
         }
     }
