@@ -58,7 +58,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void initJeux(Context context, SensorManager sensorManager){
-        TouchButton touchButton = new TouchButton(context, this, screenWidth, screenHeight);
+        touchButton = new TouchButton(context, this, screenWidth, screenHeight);
         jeuxPossibles.add(touchButton);
         Equilibriste equilibriste = new Equilibriste(sensorManager, this,screenWidth, screenHeight);
         jeuxPossibles.add(equilibriste);
