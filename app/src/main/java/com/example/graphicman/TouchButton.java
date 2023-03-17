@@ -55,11 +55,11 @@ public class TouchButton extends Jeu {
     @Override
     public void start() {
         maxTime = 5000;
-        double xRand = Math.random();
-        double yRand = Math.random();
-        xButton = (int) (xRand * (800 - buttonRadius * 2));
-        yButton = (int) (yRand * (1276 - buttonRadius * 2));
         buttonRadius = 100;
+        double xRand = 0.85;//Math.random();
+        double yRand = 0.85;//Math.random();
+        xButton = (int) (xRand * (800 - buttonRadius * 2));
+        yButton = (int) (yRand * (1190 - buttonRadius * 2));
         chrono.start(maxTime);
     }
 }
