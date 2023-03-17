@@ -7,4 +7,5 @@ public abstract class Jeu {
     public abstract void draw(Canvas canvas);
     public abstract void update();
     public abstract void start();
+
 }
