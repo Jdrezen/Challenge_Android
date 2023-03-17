@@ -3,11 +3,16 @@ package com.example.graphicman;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaRecorder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,6 +22,7 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -30,7 +36,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Jeu> historiqueJeux = new ArrayList<Jeu>();
     private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
     private int iJeuxEnCour = 0;
-    private TouchButton touchButton;
 
 
     public boolean isRunning() {
@@ -44,56 +49,48 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
 
-        AUDIOPATH = context.getCacheDir().getAbsolutePath() + "/audio.3gp";
-
-        this.context = context;
-
         image = context.getDrawable(R.drawable.gragro);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
-        Log.d("tag", "screen" + screenWidth + ", " + screenHeight);
 
-        // lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
+        lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
-        initJeux(context, sensorManager);
+        initJeux();
     }
 
-    public void initJeux(Context context){
-        jeuxPossibles.add(new Bougies(this,AUDIOPATH));
-        touchButton = new TouchButton(context, this, screenWidth, screenHeight);
-        jeuxPossibles.add(touchButton);
-
-
+    public void initJeux(){
+        Equilibriste equilibriste = new Equilibriste();
+        jeuxPossibles.add(equilibriste);
 
         nextJeu();
     }
 
     public int getRandomInt(int min, int max) {
         Random rand = new Random();
-        return rand.nextInt(max - min) + min;
+        return  rand.nextInt(max - min) + min;
     }
 
     // appelé par un jeu quand c'est gagné
     public void nextJeu(){
-        if(historiqueJeux.size()==0){
+        if(historiqueJeux.size() == 0){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
-        }else if(iJeuxEnCour==historiqueJeux.size()-1){
+        }else if(iJeuxEnCour == historiqueJeux.size()-1){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
             iJeuxEnCour++;
         }else{
             iJeuxEnCour++;
         }
-        historiqueJeux.get(iJeuxEnCour).start();
     }
 
     // appelé par un jeu quand c'est perdu
     public void perdu(){
-        Intent intent = new Intent(context, ScoreActivity.class);
-        context.startActivity(intent);
+        iJeuxEnCour = 0;
+
+        //vers activite fin/restart
     }
 
     @Override
