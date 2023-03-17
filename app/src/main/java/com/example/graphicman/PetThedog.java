@@ -2,6 +2,8 @@ package com.example.graphicman;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
@@ -32,13 +34,15 @@ public class PetThedog extends Jeu {
 
     public void drag(MotionEvent motionEvent) {
         pet++;
+        if(pet>2){
+            isPeted = true;
+        }
         if (pet>50){
             isPeted = false;
             hasBeenPeted = false;
             pet = 0;
             gameView.nextJeu();
         }
-        isPeted = true;
     }
 
     public void drawSadDog(int x, int y){
@@ -62,6 +66,11 @@ public class PetThedog extends Jeu {
     @Override
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
+        Paint p = new Paint();
+        p.setColor(Color.RED);
+        canvasWrapper.drawText("Caresse le chien !", 150, 100, p, 70);
+        p.setColor(Color.BLACK);
+        canvasWrapper.drawText(chrono.displayTime(), 300, 200, p, 70);
         int x = 0;
         int y = 0;
         if(isPeted){
@@ -75,7 +84,7 @@ public class PetThedog extends Jeu {
     @Override
     public void update() {
         if (chrono.isFinit() && !hasBeenPeted){
-            gameView.perdu("il fallait caresser le chien");
+            gameView.perdu("il fallait caresser plus le chien");
         }else if(chrono.isFinit() && hasBeenPeted){
            hasBeenPeted = false;
             isPeted = false;
