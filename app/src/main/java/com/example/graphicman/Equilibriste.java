@@ -24,9 +24,9 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     private Chrono chrono;
     private Drawable cornet;
     private Drawable boule;
+    private boolean equilibre;
 
-
-    Equilibriste(Context context, SensorManager sensorManager, GameView gameView, int width, int height) {
+    Equilibriste(Context context, SensorManager sensorManager, GameView gameView, int width, int height, boolean equilibre) {
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_NORMAL);
         this.gameView = gameView;
@@ -36,6 +36,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
         this.chrono = new Chrono();
         cornet = context.getDrawable(R.drawable.cornet);
         boule = context.getDrawable(R.drawable.glace);
+        this.equilibre = equilibre;
     }
 
     @Override
@@ -115,8 +116,12 @@ public class Equilibriste extends Jeu implements SensorEventListener {
 
         Paint p = new Paint();
         p.setColor(Color.RED);
-        canvasWrapper.drawText("Ne fais pas tombez", 100, 100, p, 70);
-        canvasWrapper.drawText("la boule !", 250, 200, p, 70);
+        if (equilibre) {
+            canvasWrapper.drawText("Ne fais pas tomber", 100, 100, p, 70);
+            canvasWrapper.drawText("la boule !", 250, 200, p, 70);
+        } else {
+            canvasWrapper.drawText("Fais tomber la boule ! ", 100, 100, p, 70);
+        }
         p.setColor(Color.BLACK);
         canvasWrapper.drawText(chrono.displayTime(), 300, 300, p, 70);
 
@@ -131,11 +136,18 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     @Override
     public void update() {
         if (fallFrame>=3){
-//            fallFrame = 0;
-            gameView.perdu();
+            if (equilibre) {
+                gameView.perdu();
+            } else {
+                gameView.nextJeu();
+            }
         }
         if (chrono.isFinit()){
-            gameView.nextJeu();
+            if (equilibre) {
+                gameView.nextJeu();
+            } else {
+                gameView.perdu();
+            }
         }
     }
 
