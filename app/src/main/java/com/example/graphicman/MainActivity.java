@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
+public class MainActivity extends AppCompatActivity{
     private GameView gameView;
 
     @Override
@@ -33,9 +33,4 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        gameView.onTouch(motionEvent);
-        return false;
-    }
 }

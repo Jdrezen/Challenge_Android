@@ -85,7 +85,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }else if(iJeuxEnCour==historiqueJeux.size()-1){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
             iJeuxEnCour++;
-        } else {
+        }else{
             iJeuxEnCour++;
         }
     }
@@ -128,8 +128,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if (canvas != null) {
             canvas.drawColor(Color.parseColor("#F5F5F5"));
             historiqueJeux.get(iJeuxEnCour).draw(canvas);
-            Log.d("runUpdate", "avion");
-
         }
     }
     public void update() {

@@ -110,7 +110,6 @@ public class Equilibriste extends Jeu implements SensorEventListener {
         }
     }
 
-
     @Override
     public void update() {
         if(fallFrame>=3){
