@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
 import android.os.Handler;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -23,10 +22,12 @@ public class Bougies extends Jeu{
     private Handler h = new Handler();
     private int frame = 0;
     private Chrono chrono = new Chrono();
+    private boolean anti = false;
 
-    public Bougies(GameView gameView, String audioPath){
+    public Bougies(GameView gameView, String audioPath, boolean anti){
         this.gameView = gameView;
         this.audioPath = audioPath;
+        this.anti = anti;
         this.img_candle = gameView.getContext().getDrawable(R.drawable.candle_fire);
         this.img_candle2 = gameView.getContext().getDrawable(R.drawable.candle_fire2);
         this.img_candle_off = gameView.getContext().getDrawable(R.drawable.candle_off);
@@ -38,7 +39,14 @@ public class Bougies extends Jeu{
         c.setCanvas(canvas);
         Paint p = new Paint();
         p.setColor(Color.RED);
-        c.drawText("Soufflez !", 250, 100, p, 70);
+
+        if(anti){
+            c.drawText("Ne soufflez pas !", 250, 100, p, 70);
+        }
+        else{
+            c.drawText("Soufflez !", 250, 100, p, 70);
+        }
+
         p.setColor(Color.BLACK);
         c.drawText(chrono.displayTime(), 300, 200, p, 70);
 
@@ -68,7 +76,11 @@ public class Bougies extends Jeu{
             h.postDelayed(run, 1000);
         }
         if (chrono.isFinit() && on){
-            gameView.perdu("Il fallait souffler sur l'écran");
+            if (anti) {
+                gameView.nextJeu();
+            } else {
+                gameView.perdu("Il ne fallait pas souffler sur l'écran");
+            }
         }
     }
 
@@ -91,7 +103,11 @@ public class Bougies extends Jeu{
     private Runnable run = new Runnable() {
         @Override
         public void run() {
-            gameView.nextJeu();
+            if (anti) {
+                gameView.perdu("Il fallait souffler sur l'écran");
+            } else {
+                gameView.nextJeu();
+            }
         }
     };
 }
