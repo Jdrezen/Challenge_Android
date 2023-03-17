@@ -3,6 +3,7 @@ package com.example.graphicman;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,6 +14,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaRecorder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,6 +23,7 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -36,6 +39,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Jeu> historiqueJeux = new ArrayList<Jeu>();
     private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
     private int iJeuxEnCour = 0;
+    private static String AUDIOPATH;
+    private Context context;
 
 
     public boolean isRunning() {
@@ -48,6 +53,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
+
+        AUDIOPATH = context.getCacheDir().getAbsolutePath() + "/audio.3gp";
+
+        this.context = context;
 
         image = context.getDrawable(R.drawable.gragro);
 
@@ -63,12 +72,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void initJeux(){
-
+        jeuxPossibles.add(new Bougies(this,AUDIOPATH));
+        nextJeu();
     }
 
     public int getRandomInt(int min, int max) {
         Random rand = new Random();
-        return  rand.nextInt(max + 1 - min) + min;
+        return  rand.nextInt(max - min) + min;
     }
 
     // appelé par un jeu quand c'est gagné
@@ -81,13 +91,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }else{
             iJeuxEnCour++;
         }
+        historiqueJeux.get(iJeuxEnCour).start();
     }
 
     // appelé par un jeu quand c'est perdu
     public void perdu(){
-        iJeuxEnCour = 0;
-
-        //vers activite fin/restart
+        Intent intent = new Intent(context, ScoreActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
