@@ -1,6 +1,7 @@
 package com.example.graphicman;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
@@ -35,7 +36,11 @@ public class Bougies extends Jeu{
     public void draw(Canvas canvas) {
         CanvasWrapper c = new CanvasWrapper(800,1276);
         c.setCanvas(canvas);
-        Paint paint = new Paint();
+        Paint p = new Paint();
+        p.setColor(Color.RED);
+        c.drawText("Soufflez !", 250, 100, p, 70);
+        p.setColor(Color.BLACK);
+        c.drawText(chrono.displayTime(), 300, 200, p, 70);
 
         if(on){
             if(frame == 0){

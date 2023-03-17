@@ -80,6 +80,9 @@ public class GameBoy extends Jeu implements SensorEventListener {
                 frame++;
                 break;
             case 2:
+            case 3:
+            case 4:
+            case 5:
                 canvasWrapper.drawImage(mama2,x,y,x+800,y+800);
                 frame++;
                 break;
@@ -93,13 +96,18 @@ public class GameBoy extends Jeu implements SensorEventListener {
         int x = 0;
         int y = 0;
         canvas.drawColor(Color.BLACK);
+        Paint p = new Paint();
+        p.setColor(Color.RED);
+        canvasWrapper.drawText("Eteint la GameBoy !", 100, 100, p, 70);
+        p.setColor(Color.WHITE);
+        canvasWrapper.drawText(chrono.displayTime(), 300, 200, p, 70);
         if(hide){
             drawBoiSleep(x,y);
         }else{
             drawBoiPlay(x,y);
         }
         if(mama){
-            drawMama(x,y);
+            drawMama(x,y+300);
         }
     }
 
@@ -113,7 +121,7 @@ public class GameBoy extends Jeu implements SensorEventListener {
         }else if(chrono.getMilliTime() <= 5000){
             mama = true;
         }
-        if(mama&& frame == 2 && !hide){
+        if(mama&& frame == 4 && !hide){
             gameView.perdu();
         }
         if (chrono.isFinit()){
