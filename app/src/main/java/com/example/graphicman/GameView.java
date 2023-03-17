@@ -3,16 +3,11 @@ package com.example.graphicman;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaRecorder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -22,7 +17,6 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -36,7 +30,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Jeu> historiqueJeux = new ArrayList<Jeu>();
     private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
     private int iJeuxEnCour = 0;
-
+    private TouchButton touchButton;
 
 
     public boolean isRunning() {
@@ -56,28 +50,39 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
+        Log.d("tag", "screen" + screenWidth + ", " + screenHeight);
 
-        lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
+        // lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
-        initJeux();
+        initJeux(context);
     }
 
-    public void initJeux(){
+    public void initJeux(Context context){
+        touchButton = new TouchButton(context, this, screenWidth, screenHeight);
+        jeuxPossibles.add(touchButton);
 
+
+
+        nextJeu();
     }
 
     public int getRandomInt(int min, int max) {
         Random rand = new Random();
-        return  rand.nextInt(max + 1 - min) + min;
+        return rand.nextInt(max - min) + min;
     }
 
     // appelé par un jeu quand c'est gagné
     public void nextJeu(){
-        if(historiqueJeux.size()==0 || iJeuxEnCour==historiqueJeux.size()-1){
+        if(historiqueJeux.size() == 0 || iJeuxEnCour == historiqueJeux.size() - 1){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
+        } else if (iJeuxEnCour == historiqueJeux.size() - 1) {
+            historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
+            iJeuxEnCour++;
+        } else {
+            iJeuxEnCour++;
         }
-        iJeuxEnCour++;
+
     }
 
     // appelé par un jeu quand c'est perdu
@@ -117,11 +122,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawColor(Color.parseColor("#F5F5F5"));
-            historiqueJeux.get(iJeuxEnCour).draw();
+            historiqueJeux.get(iJeuxEnCour).draw(canvas);
+            Log.d("runUpdate", "avion");
+
         }
     }
     public void update() {
         historiqueJeux.get(iJeuxEnCour).update();
     }
 
+    public void onTouch(MotionEvent motionEvent) {
+        touchButton.buttonTouch(motionEvent);
+    }
 }
