@@ -77,9 +77,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     // appelé par un jeu quand c'est gagné
     public void nextJeu(){
-        if(historiqueJeux.size()==0){
+        if(historiqueJeux.size() == 0){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
-        }else if(iJeuxEnCour==historiqueJeux.size()-1){
+        }else if(iJeuxEnCour == historiqueJeux.size()-1){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
             iJeuxEnCour++;
         }else{
