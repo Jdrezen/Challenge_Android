@@ -1,8 +1,10 @@
 package com.example.graphicman;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,15 +21,21 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     private boolean perdu = false;
     private int fallFrame = 0;
     private String fallDirr = "right";
+    private Chrono chrono;
+    private Drawable cornet;
+    private Drawable boule;
 
 
-    Equilibriste(SensorManager sensorManager, GameView gameView, int width, int height) {
+    Equilibriste(Context context, SensorManager sensorManager, GameView gameView, int width, int height) {
         this.sensorManager = sensorManager;
         this.sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_NORMAL);
         this.gameView = gameView;
         this.height = height;
         this.width = width;
         this.canvasWrapper = new CanvasWrapper(width, height);
+        this.chrono = new Chrono();
+        cornet = context.getDrawable(R.drawable.cornet);
+        boule = context.getDrawable(R.drawable.glace);
     }
 
     @Override
@@ -51,15 +59,17 @@ public class Equilibriste extends Jeu implements SensorEventListener {
 
 
     public void drawEquilibriste(int x,int y){
-        Paint blackPaint = new Paint();
-        blackPaint.setColor(Color.rgb(0, 0, 0));
-        canvasWrapper.drawCircle(x,y,50,blackPaint);
+//        Paint blackPaint = new Paint();
+//        blackPaint.setColor(Color.rgb(0, 0, 0));
+//        canvasWrapper.drawCircle(x,y,50,blackPaint);
+        canvasWrapper.drawImage(boule,x,y,x+800,y+800);
     }
 
     public void drawPoto(int x,int y){
-        Paint blackPaint = new Paint();
-        blackPaint.setColor(Color.rgb(0, 0, 0));
-        canvasWrapper.drawRect(x,y,x+50,y+500, blackPaint);
+//        Paint blackPaint = new Paint();
+//        blackPaint.setColor(Color.rgb(0, 0, 0));
+//        canvasWrapper.drawRect(x,y,x+50,y+500, blackPaint);
+        canvasWrapper.drawImage(cornet,x,y,x+800,y+800);
     }
 
     public void drawFall(int x,int y){
@@ -100,25 +110,35 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     @Override
     public void draw(Canvas canvas) {
         canvasWrapper.setCanvas(canvas);
-        int x =  width/2;
+        int x =  (width/2) - 300;
         int y = 500;
-        drawPoto(x, y);
+
+        Paint p = new Paint();
+        canvasWrapper.drawText("" + chrono.getTime(), 300, 100, p, 70);
+
         if(!perdu){
             drawEquilibriste(x, y);
         }else{
             drawFall(x,y);
         }
+        drawPoto(x, y);
     }
 
     @Override
     public void update() {
         if(fallFrame>=3){
+            chrono.stop();
+//            fallFrame = 0;
+            gameView.perdu();
+        }
+        if(chrono.getTime()>=15){
             gameView.nextJeu();
         }
     }
 
     @Override
     public void start() {
+        chrono.start();
         fallFrame= 0;
         perdu = false;
     }

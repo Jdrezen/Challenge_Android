@@ -24,7 +24,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread thread;
     private boolean running = true;
     private SensorManager sensorManager;
-    private LifeBars lifebars;
     private int screenHeight;
     private int screenWidth;
     Drawable image;
@@ -40,10 +39,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         return true;
     }
 
-    public LifeBars getLifebars() {
-        return lifebars;
-    }
-
     public GameView(Context context, SensorManager sensorManager) {
         super(context);
         image = context.getDrawable(R.drawable.gragro);
@@ -57,7 +52,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
-        lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
         initJeux(context, sensorManager);
@@ -65,25 +59,30 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public void initJeux(Context context, SensorManager sensorManager){
         touchButton = new TouchButton(context, this, screenWidth, screenHeight);
-        //jeuxPossibles.add(touchButton);
-        Equilibriste equilibriste = new Equilibriste(sensorManager, this,screenWidth, screenHeight);
+        jeuxPossibles.add(touchButton);
+        Equilibriste equilibriste = new Equilibriste(context,sensorManager, this,screenWidth, screenHeight);
         jeuxPossibles.add(equilibriste);
         jeuxPossibles.add(new Bougies(this, AUDIOPATH));
 
         nextJeu();
     }
 
-    public int getRandomInt(int min, int max) {
+    public int getRandomInt(int min, int max, int v) {
         Random rand = new Random();
-        return rand.nextInt(max - min) + min;
+        int res = rand.nextInt(max - min) + min;
+        while(res == v){
+            res = rand.nextInt(max - min) + min;
+        }
+
+        return res;
     }
 
     // appelé par un jeu quand c'est gagné
     public void nextJeu(){
         if(historiqueJeux.size()==0){
-            historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
+            historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size(), -1)));
         }else if(iJeuxEnCour==historiqueJeux.size()-1){
-            historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
+            historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size(), jeuxPossibles.indexOf(historiqueJeux.get(iJeuxEnCour)))));
             iJeuxEnCour++;
         }else{
             iJeuxEnCour++;
