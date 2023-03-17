@@ -13,7 +13,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaRecorder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -36,7 +35,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Jeu> historiqueJeux = new ArrayList<Jeu>();
     private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
     private int iJeuxEnCour = 0;
-    private TouchButton touchButton;
 
 
     public boolean isRunning() {
@@ -56,9 +54,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
-        Log.d("tag", "screen" + screenWidth + ", " + screenHeight);
 
-        // lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
+        lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
         initJeux(context);
