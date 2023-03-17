@@ -64,7 +64,7 @@ public class GameThread extends Thread {
         public void run() {
             if (gameView.isRunning()) {
                 gameView.update();
-                h.postDelayed(this, 10);
+                h.postDelayed(this, 100);
             }
         }
     };
