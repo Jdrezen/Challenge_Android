@@ -3,16 +3,11 @@ package com.example.graphicman;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaRecorder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,6 +30,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Jeu> historiqueJeux = new ArrayList<Jeu>();
     private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
     private int iJeuxEnCour = 0;
+    private TouchButton touchButton;
 
 
     public boolean isRunning() {
@@ -58,7 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
-        initJeux(context);
+        initJeux(context, sensorManager);
     }
 
     public void initJeux(Context context){
@@ -77,9 +73,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     // appelé par un jeu quand c'est gagné
     public void nextJeu(){
-        if(historiqueJeux.size() == 0){
+        if(historiqueJeux.size()==0){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
-        }else if(iJeuxEnCour == historiqueJeux.size()-1){
+        }else if(iJeuxEnCour==historiqueJeux.size()-1){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
             iJeuxEnCour++;
         }else{
