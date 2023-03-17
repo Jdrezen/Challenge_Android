@@ -50,7 +50,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         this.context = context;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ((Activity )context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 
@@ -60,7 +60,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         isRunning = true;
     }
 
-    public void initJeux(Context context, SensorManager sensorManager) {
+    public void initJeux(Context context, SensorManager sensorManager){
         touchButton = new TouchButton(context, this, screenWidth, screenHeight, true);
         donttouchButton = new TouchButton(context, this, screenWidth, screenHeight, false);
         jeuxPossibles.add(touchButton);
@@ -79,7 +79,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public int getRandomInt(int min, int max, int v) {
         Random rand = new Random();
         int res = rand.nextInt(max - min) + min;
-        while (res == v) {
+        while(res == v){
             res = rand.nextInt(max - min) + min;
         }
 
@@ -87,24 +87,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     // appelé par un jeu quand c'est gagné
-    public void nextJeu() {
+    public void nextJeu(){
         score++;
-        if (historiqueJeux.size() == 0) {
+        if(historiqueJeux.size()==0){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size(), -1)));
-        } else if (iJeuxEnCour == historiqueJeux.size() - 1) {
+        }else if(iJeuxEnCour==historiqueJeux.size()-1){
             historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size(), jeuxPossibles.indexOf(historiqueJeux.get(iJeuxEnCour)))));
             iJeuxEnCour++;
-        } else {
+        }else{
             iJeuxEnCour++;
         }
         historiqueJeux.get(iJeuxEnCour).start();
     }
 
     // appelé par un jeu quand c'est perdu
-    public void perdu(String message) {
+    public void perdu() {
         isRunning = false;
         Intent intent = new Intent(context, ScoreActivity.class);
-        intent.putExtra()
         intent.putExtra("score", score);
         context.startActivity(intent);
     }
@@ -142,7 +141,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             historiqueJeux.get(iJeuxEnCour).draw(canvas);
         }
     }
-
     public void update() {
         historiqueJeux.get(iJeuxEnCour).update();
     }
