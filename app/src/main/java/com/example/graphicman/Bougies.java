@@ -72,10 +72,10 @@ public class Bougies extends Jeu{
         valeur = recorder.getMaxAmplitude();
         if (valeur > 15000 && on){
             on = false;
-            recorder.stop();
             h.postDelayed(run, 1000);
         }
         if (chrono.isFinit() && on){
+            recorder.stop();
             if (anti) {
                 gameView.nextJeu();
             } else {
