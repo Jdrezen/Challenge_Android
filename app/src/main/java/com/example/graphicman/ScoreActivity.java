@@ -13,6 +13,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     private int score;
     private int highScore;
+    private String message;
 
 
     @Override
@@ -22,6 +23,7 @@ public class ScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_score);
 
         score = getIntent().getIntExtra("score", 0);
+        message = getIntent().getStringExtra("mort");
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         highScore = sharedPref.getInt("highScore", score);
@@ -31,6 +33,9 @@ public class ScoreActivity extends AppCompatActivity {
 
         TextView scoreView = findViewById(R.id.score);
         scoreView.setText(score + "");
+
+        TextView messageView = findViewById(R.id.messageMort);
+        messageView.setText("Cause de mort : " + message);
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("highScore", Math.max(score, highScore));

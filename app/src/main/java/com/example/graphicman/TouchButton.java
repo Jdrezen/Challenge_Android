@@ -37,7 +37,7 @@ public class TouchButton extends Jeu {
             if (touch) {
                 gameView.nextJeu();
             } else {
-                gameView.perdu();
+                gameView.perdu("Il ne fallait pas toucher le bouton");
             }
         }
     }
@@ -64,7 +64,7 @@ public class TouchButton extends Jeu {
     public void update() {
         if (chrono.isFinit()) {
             if (touch) {
-                gameView.perdu();
+                gameView.perdu("Il fallait appuyer sur le bouton");
             } else {
                 gameView.nextJeu();
             }

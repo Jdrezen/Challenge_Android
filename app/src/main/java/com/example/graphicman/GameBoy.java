@@ -122,7 +122,7 @@ public class GameBoy extends Jeu implements SensorEventListener {
             mama = true;
         }
         if(mama&& frame == 4 && !hide){
-            gameView.perdu();
+            gameView.perdu("Il fallait cacher la luminosité de l'appareil");
         }
         if (chrono.isFinit()){
             mama = false;

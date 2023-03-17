@@ -68,7 +68,7 @@ public class Bougies extends Jeu{
             h.postDelayed(run, 1000);
         }
         if (chrono.isFinit() && on){
-            gameView.perdu();
+            gameView.perdu("Il fallait souffler sur l'écran");
         }
     }
 

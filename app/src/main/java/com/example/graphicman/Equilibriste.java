@@ -137,7 +137,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
     public void update() {
         if (fallFrame>=3){
             if (equilibre) {
-                gameView.perdu();
+                gameView.perdu("Il fallait tenir votre appareil droit");
             } else {
                 gameView.nextJeu();
             }
@@ -146,7 +146,7 @@ public class Equilibriste extends Jeu implements SensorEventListener {
             if (equilibre) {
                 gameView.nextJeu();
             } else {
-                gameView.perdu();
+                gameView.perdu("Il fallait faire pencher votre appareil");
             }
         }
     }

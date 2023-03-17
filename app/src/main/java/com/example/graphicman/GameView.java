@@ -104,7 +104,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void perdu(String message) {
         isRunning = false;
         Intent intent = new Intent(context, ScoreActivity.class);
-        intent.putExtra()
+        intent.putExtra("mort", message);
         intent.putExtra("score", score);
         context.startActivity(intent);
     }
