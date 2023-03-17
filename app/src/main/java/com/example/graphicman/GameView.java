@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread thread;
     private boolean running = true;
     private SensorManager sensorManager;
