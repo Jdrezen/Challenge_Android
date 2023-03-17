@@ -3,6 +3,7 @@ package com.example.graphicman;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 
 public class CanvasWrapper {
 
@@ -40,5 +41,10 @@ public class CanvasWrapper {
 
     public void drawCircle(float x, float y, float raduis, Paint paint) {
         canvas.drawCircle(x * widthRatio, y * heightRatio , raduis * widthRatio, paint);
+    }
+
+    public void drawImage(Drawable image, float left, float top, float right, float bottom){
+        image.setBounds((int) (left * widthRatio), (int) (top * heightRatio), (int) (right * widthRatio), (int) (bottom * heightRatio));
+        image.draw(canvas);
     }
 }

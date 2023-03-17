@@ -82,11 +82,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        CanvasWrapper c = new CanvasWrapper(1080, 2154);
+        c.setCanvas(canvas);
+
         if (canvas != null) {
             canvas.drawColor(Color.parseColor("#F5F5F5"));
             //lifebars.draw(canvas);
-            image.setBounds(200, 200, 500, 500);
-            image.draw(canvas);
+            //image.setBounds(200, 200, 500, 500);
+            c.drawImage(image, 200, 200, 500, 900);
         }
     }
     public void update() {
