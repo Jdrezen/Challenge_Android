@@ -21,6 +21,10 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread thread;
     private boolean running = true;
@@ -29,6 +33,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private int screenHeight;
     private int screenWidth;
     Drawable image;
+    private ArrayList<Jeu> historiqueJeux = new ArrayList<Jeu>();
+    private ArrayList<Jeu> jeuxPossibles = new ArrayList<Jeu>();
+    private int iJeuxEnCour = 0;
 
 
     public boolean isRunning() {
@@ -52,6 +59,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         lifebars = new LifeBars(context,100,100,100, screenHeight, screenWidth);
         getHolder().addCallback(this);
         thread = new GameThread(context, getHolder(), this);
+        initJeux();
+    }
+
+    public void initJeux(){
+
+    }
+
+    public int getRandomInt(int min, int max) {
+        Random rand = new Random();
+        return  rand.nextInt(max + 1 - min) + min;
+    }
+
+    // appelé par un jeu quand c'est gagné
+    public void nextJeu(){
+        if(historiqueJeux.size()==0 || iJeuxEnCour==historiqueJeux.size()-1){
+            historiqueJeux.add(jeuxPossibles.get(getRandomInt(0, jeuxPossibles.size())));
+        }
+        iJeuxEnCour++;
+    }
+
+    // appelé par un jeu quand c'est perdu
+    public void perdu(){
+        iJeuxEnCour = 0;
+
+        //vers activite fin/restart
     }
 
     @Override
@@ -84,13 +116,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawColor(Color.parseColor("#F5F5F5"));
-            //lifebars.draw(canvas);
-            image.setBounds(200, 200, 500, 500);
-            image.draw(canvas);
+            historiqueJeux.get(iJeuxEnCour).draw();
         }
     }
     public void update() {
-
+        historiqueJeux.get(iJeuxEnCour).update();
     }
 
 }
